@@ -7,52 +7,54 @@
 
 int main(int argc, char *argv[])
 {
-        int i;
+        int i;                      /* counter variable */
         int col_pos_out;            /* position of the output buffer */
         int col_pos_in;             /* position of the input buffer */
-        int blanks_in;              /* number of consecutive blanks */
         int tabs;                   /* number of tabs to be written */
-        int blanks_out;             /* number of blanks to be written */
+        int blanks;                 /* number of blanks to be written */
+	int pos_l;                  /* remember the leftmost position of the blank space */
+	int to_tabstop;             /* the number of blanks until the first tabstop */
         int ch;
         char line[MAXLINE];
 
-        col_pos_out = col_pos_in = i = blanks_out = tabs = 0;
-        blanks_in = 0;
+        col_pos_out = col_pos_in = i = tabs = 0;
+        blanks = 0;
         while((ch = getchar()) != EOF)
         {
                 col_pos_in++;
                 if(ch == ' ')
                 {
-                        blanks_in++;   /* count consecutive blanks */
+			/* determine the position left of the blanks */
+			if(blanks == 0)
+				pos_l = col_pos_in;
+                        blanks++;   /* count consecutive blanks */
                 }
-                else if(blanks_in > 0)  /* first non-blank character */
+                else if(blanks > 0)  /* first non-blank character */
                 {
-                        /* determine the number of blanks after the last tab stop */
-                        blanks_out = MIN(blanks_in, (col_pos_in % COLNUM));
-			/* remove the blanks that will still be blanks from
-			 * the total amount of blanks received */
-                        blanks_in -= blanks_out;
-                        /* determine the number of tabs until the tab stop above */
-                        if(blanks_in > 0)
+			/* blanks until tabstop */
+			to_tabstop = COLNUM - (pos_l % COLNUM);
+			/* only insert the first tab
+			 * if there are enough blanks */
+			if(to_tabstop < blanks)
 			{
-				/* TODO: this determines the first tab
-				 * need to determine all remaining tabs
-				 * maybe using a while loop for all the remaining
-				 * blanks according to COLNUM */
-                                tabs = (col_pos_in % COLNUM);
+				blanks -= to_tabstop + 1;
+				tabs++;
 			}
-#if 0			
-			printf("inserting %d tabs, %d blanks and the character %c\n",
-			       tabs, blanks_out, ch);
-#endif			
+			/* determine the full tabs */
+			while(blanks > COLNUM)
+			{
+				tabs++;
+				blanks -= COLNUM;
+			}
                         for(i = 0; i < tabs; i++)
                                 line[col_pos_out++] = '\t';
-                        for(i = 0; i < blanks_out; i++)
+                        for(i = 0; i < blanks; i++)
                                 line[col_pos_out++] = ' ';
-                        blanks_in = 0;
+			tabs = 0;
+                        blanks = 0;
                         line[col_pos_out++] = ch;
                 }
-                else
+                else 
                 {
                         line[col_pos_out++] = ch;
                 }
@@ -63,6 +65,7 @@ int main(int argc, char *argv[])
                         line[col_pos_out] = '\0';
                         printf("%s",line);
                         col_pos_out = 0;
+			col_pos_in = 0;
                 }
         }
         return 0;
