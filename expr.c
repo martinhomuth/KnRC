@@ -30,7 +30,10 @@ int main(int argc, char **argv)
 	char *cur;
 	int op; 
 	if(argc < 2)
+	{
 		printf("There is no calculation possible\n");
+		exit(EXIT_FAILURE);
+	}
 	if(argc > 32)
 	{
 		printf("Too many arguments, this is just a small application\n");
