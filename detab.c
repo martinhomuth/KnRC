@@ -1,31 +1,10 @@
 /* detab.c --- 
  * 
  * Filename: detab.c
- * Description: 
+ * Description: Replaces all tabulators ('\t') with blanks
  * Author: Martin Homuth
- * Maintainer: 
  * Created: Sat Mar 21 10:26:59 2015 (+0100)
- * Version: 
- * Package-Requires: ()
- * Last-Updated: 
- *           By: 
- *     Update #: 0
- * URL: 
- * Doc URL: 
- * Keywords: 
- * Compatibility: 
- * 
- */
-
-/* Commentary: 
- * 
- * 
- * 
- */
-
-/* Change Log:
- * 
- * 
+ * Version: 0.1
  */
 
 /* This program is free software: you can redistribute it and/or modify
@@ -44,6 +23,53 @@
 
 /* Code: */
 
+#include <stdio.h>
+
+#define MAXLINE 1000
+
+#define COLNUM 8
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+
+int main(int argc, char *argv[])
+{
+        int i;                      /* counter variable */
+        int col_pos_out;            /* position of the output buffer */
+        int col_pos_in;             /* position of the input buffer */
+	int to_tabstop;             /* the number of blanks until the first tabstop */
+        int ch;                     /* store the current character */
+        char line[MAXLINE];
+
+        col_pos_out = col_pos_in = i = 0;
+        while((ch = getchar()) != EOF)
+        {
+		col_pos_in++;
+		if(ch == '\t')
+		{
+			/* get the width of the tabulator */
+			to_tabstop = COLNUM - (col_pos_in % COLNUM);
+			col_pos_in += to_tabstop;
+			/* fill with blanks */
+			for(i = 0; i <= to_tabstop; i++)
+			{
+				line[col_pos_out++] = ' '; 
+			}
+		}
+                else 
+                {
+                        line[col_pos_out++] = ch;
+                }
+
+		/* print the current line */
+                if(line[col_pos_out-1] == '\n') 
+                {
+                        line[col_pos_out] = '\0';
+                        printf("%s",line);
+                        col_pos_out = 0;
+			col_pos_in = 0;
+                }
+        }
+        return 0;
+}
 
 
 /* detab.c ends here */
