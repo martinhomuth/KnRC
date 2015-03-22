@@ -65,11 +65,6 @@ int main(int argc, char *argv[])
 		printf("Using default tabstop length of %d from the beginning\n", TABSTOPWIDTH);
 	}
 
-	if(argc > 3)
-	{
-		printf("Too many arguments, evaluating only the first two\n");
-	}
-
 	while(--argc > 0)
 	{
 		ch = (*++argv)[0];
