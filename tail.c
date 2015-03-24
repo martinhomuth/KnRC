@@ -60,11 +60,59 @@
 
 #define MAXLINE 100
 #define DEFAULT 10
+#define MAXLEN 100
+
+char *alloc(int len)
+{
+	char *ptr = malloc(sizeof(char) * len);
+	if(!ptr)
+	{
+		printf("Failed to allocate memory\n");
+		exit(EXIT_FAILURE);
+	}
+	return ptr;
+}
+
+int getline(char *dst, int len)
+{
+	int i;
+	int ch;
+	char *ptr = dst;
+	i = 0;
+	while((ch = getchar()) != EOF && i < len && (ch != '\n'))
+	{
+		ptr[i++] = ch;
+	}
+	return i;
+}
+
+int readlines(char *lineptr[], int maxlines)
+{
+	int nlines, len;
+	char *p, line[MAXLINE];
+	nlines = 0;
+
+	while((len = getline(line, MAXLEN)) > 0)
+	{
+		if(nlines >= maxlines || (p = alloc(len)) == NULL)
+		{
+			return -1;
+		}
+		else
+		{
+			line[len-1] = '\0';
+			strcpy(p, line);
+			lineptr[nlines++] = p;
+		}
+	}
+	return nlines;
+}
 
 int main(int argc, char **argv)
 {
 	int ch;                   /* holds the characters obtained from the input */
 	int n;                    /* the number of lines displayed from the input */
+	char **lines;
 
 	n = DEFAULT;
 	while(--argc > 0 && (*++argv)[0] == '-')
@@ -93,11 +141,8 @@ int main(int argc, char **argv)
 	}
 	printf("will show the last %d lines\n", n);
 
-	while(getlines() != 0)
-	{
-
-
-	}
+	lines = malloc(sizeof(char *) * n);
+	readlines(lines, n);
 }
 
 /* tail.c ends here */
