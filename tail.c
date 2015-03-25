@@ -73,6 +73,11 @@ char *alloc(int len)
 	return ptr;
 }
 
+void free_line(char *line)
+{
+	free(line);
+}
+
 int getline(char *dst, int len)
 {
 	int i;
@@ -112,6 +117,7 @@ int main(int argc, char **argv)
 {
 	int ch;                   /* holds the characters obtained from the input */
 	int n;                    /* the number of lines displayed from the input */
+	int i;
 	char **lines;
 
 	n = DEFAULT;
@@ -142,7 +148,16 @@ int main(int argc, char **argv)
 	printf("will show the last %d lines\n", n);
 
 	lines = malloc(sizeof(char *) * n);
-	readlines(lines, n);
+	n = readlines(lines, n);
+	for(i = 0; i < n; i++)
+	{
+		if(lines[i] != NULL)
+		{
+			printf("%s\n", lines[i]);
+			free_line(lines[i]);
+		}
+	}
+	free(lines);
 }
 
 /* tail.c ends here */
