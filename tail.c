@@ -93,21 +93,32 @@ int getline(char *dst, int len)
 
 int readlines(char *lineptr[], int maxlines)
 {
-	int nlines, len;
+	int nlines, len, i;
 	char *p, line[MAXLINE];
 	nlines = 0;
 
 	while((len = getline(line, MAXLEN)) > 0)
 	{
-		if(nlines >= maxlines || (p = alloc(len)) == NULL)
+		if((p = alloc(len)) == NULL)
 		{
 			return -1;
 		}
 		else
 		{
-			line[len-1] = '\0';
+			line[len] = '\0';
 			strcpy(p, line);
-			lineptr[nlines++] = p;
+			if(nlines >= maxlines)
+			{
+				for(i = 0; i < maxlines-1; i++)
+				{
+					lineptr[i] = lineptr[i+1];
+				}
+				lineptr[maxlines-1] = p;
+			}
+			else
+			{
+				lineptr[nlines++] = p;
+			}
 		}
 	}
 	return nlines;
