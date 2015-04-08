@@ -27,18 +27,19 @@
 #include <string.h>
 
 #define MAXLINES 5000        /* maximum number of lines to be sorted */
+#define MAXLINE 100
 char *lineptr[MAXLINES];     /* pointers to text lines */
 
 int readlines(char *lineptr[], int nlines);
 int writelines(char *lineptr[], int nlines);
 
-void qsort(void *lineptr[], int left, int right,void qsort(void *lineptr[], int left, int right,
-	   int (*comp)(void *, void *));
-	   int (*comp)(void *, void *));
+void q_sort(void *lineptr[], int left, int right,
+	   int (*comp)(void*,void*));
+
 int numcmp(char *, char *);
 
 /* sort the input lines */
-int main()
+int main(int argc, char *argv[])
 {
 	int nlines;               /* number of input lines read */
 	int numeric = 0;          /* 1 if numeric sort */
@@ -48,8 +49,8 @@ int main()
 
 	if((nlines = readlines(lineptr, MAXLINES)) >= 0)
 	{
-		qsort((void **) lineptr, 0, nlines-1,
-		      (int (*)(void*, void*)) (numeric ? numcmp : strcmp ));
+		q_sort((void **) lineptr, 0, nlines-1,
+		       (int (*)(void*,void*))(numeric? numcmp : strcmp));
 		writelines(lineptr, nlines);
 		return 0;
 	}
@@ -61,7 +62,7 @@ int main()
 	
 }
 
-void qsort(void *lineptr[], int left, int right,
+void q_sort(void *v[], int left, int right,
 	   int (*comp)(void *, void *))
 {
 	int i, last;
@@ -75,8 +76,8 @@ void qsort(void *lineptr[], int left, int right,
 		if((*comp)(v[i], v[left]) < 0)
 			swap(v, ++last, i);
 	swap(v, left, last);
-	qsort(v, left, last-1, comp);
-	qsort(v, last+1, right, comp);
+	q_sort(v, left, last-1, comp);
+	q_sort(v, last+1, right, comp);
 }
 
 int numcmp(char *s1, char *s2)
@@ -103,8 +104,48 @@ void swap(void *v[], int i, int j)
 	v[j] = tmp;
 }
 
-int readlines(char *lineptr[], int nlines)
+char *alloc(int len)
 {
-	
+	char *ptr = malloc(sizeof(char) * len);
+	if(!ptr)
+	{
+		perror("malloc()");
+		exit(0);
+	}
+	return ptr;
+}
+
+int getline(char *line, int len)
+{
+	int ch;
+	char *ptr = line;
+	int i = 0;
+	while((ch = getchar() != EOF) && i < len && (ch != '\n'))
+	{
+		ptr[i++] = ch;
+	}
+	return i;
+}
+
+int readlines(char *lineptr[], int maxlines)
+{
+	int nlines, len, i;
+	char *p, line[MAXLINE];
+
+	nlines = 0;
+	if((len = getline(line, maxlines)) < 0)
+	{
+		if((p = alloc(len)) == NULL)
+		{
+			return -1;
+		}
+		else
+		{
+			line[len] = '\0';
+			strcpy(p,line);
+			lineptr[nlines++] = p;
+		}
+	}
+	return nlines;
 }
 /* sort_lines.c ends here */
