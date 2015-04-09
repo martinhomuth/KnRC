@@ -26,17 +26,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXLINES 5000        /* maximum number of lines to be sorted */
-#define MAXLINE 100
-char *lineptr[MAXLINES];     /* pointers to text lines */
-
-int readlines(char *lineptr[], int nlines);
-int writelines(char *lineptr[], int nlines);
 
 void q_sort(void *lineptr[], int left, int right,
 	   int (*comp)(void*,void*));
 
-int numcmp(char *, char *);
+int numcmp(const char *, const char *);
+
 
 /* sort the input lines */
 int main(int argc, char *argv[])
@@ -47,11 +42,12 @@ int main(int argc, char *argv[])
 	if(argc > 1 && strcmp(argv[1], "-n") == 0)
 		numeric = 1;
 
-	if((nlines = readlines(lineptr, MAXLINES)) >= 0)
+	if((nlines = read_lines(lineptr, MAXLINES)) >= 0)
 	{
 		q_sort((void **) lineptr, 0, nlines-1,
-		       (int (*)(void*,void*))(numeric? numcmp : strcmp));
-		writelines(lineptr, nlines);
+		       (int (*)(void*,void*))(numeric ? numcmp : strcmp));
+
+		write_lines(lineptr, nlines);
 		return 0;
 	}
 	else
@@ -80,7 +76,7 @@ void q_sort(void *v[], int left, int right,
 	q_sort(v, last+1, right, comp);
 }
 
-int numcmp(char *s1, char *s2)
+int numcmp(const char *s1, const char *s2)
 {
 	double v1, v2;
 
@@ -115,7 +111,7 @@ char *alloc(int len)
 	return ptr;
 }
 
-int getline(char *line, int len)
+int get_line(char *line, int len)
 {
 	int ch;
 	char *ptr = line;
@@ -127,23 +123,30 @@ int getline(char *line, int len)
 	return i;
 }
 
-int readlines(char *lineptr[], int maxlines)
+void write_lines(char *lineptr[], int nlines)
 {
-	int nlines, len, i;
+	while(nlines-- > 0)
+		printf("%s\n", *lineptr++);
+}
+
+int read_lines(char *lineptr[], int maxlines)
+{
+	int nlines, len;
 	char *p, line[MAXLINE];
 
 	nlines = 0;
-	if((len = getline(line, maxlines)) < 0)
+	if((len = get_line(line, maxlines)) < 0)
 	{
-		if((p = alloc(len)) == NULL)
+		if(nlines >= maxlines || (p = alloc(len)) == NULL)
 		{
 			return -1;
 		}
 		else
 		{
-			line[len] = '\0';
+			line[len-1] = '\0';
 			strcpy(p,line);
 			lineptr[nlines++] = p;
+
 		}
 	}
 	return nlines;
