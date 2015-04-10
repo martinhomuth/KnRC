@@ -1,26 +1,9 @@
 /* alloc.h --- 
  * 
  * Filename: alloc.h
- * Description: 
+ * Description: Allocation of character buffers
  * Author: Martin Homuth
- * Maintainer: 
  * Created: Thu Apr  9 12:47:43 2015 (+0200)
- * Version: 
- * Package-Requires: ()
- * Last-Updated: 
- *           By: 
- *     Update #: 0
- * URL: 
- * Doc URL: 
- * Keywords: 
- * Compatibility: 
- * 
- */
-
-/* Commentary: 
- * 
- * 
- * 
  */
 
 /* Change Log:

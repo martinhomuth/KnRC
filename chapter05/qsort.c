@@ -1,26 +1,9 @@
 /* qsort.c --- 
  * 
  * Filename: qsort.c
- * Description: 
+ * Description: Implementation of the quicksort algorithm. 
  * Author: Martin Homuth
- * Maintainer: 
  * Created: Thu Apr  9 12:15:00 2015 (+0200)
- * Version: 
- * Package-Requires: ()
- * Last-Updated: 
- *           By: 
- *     Update #: 0
- * URL: 
- * Doc URL: 
- * Keywords: 
- * Compatibility: 
- * 
- */
-
-/* Commentary: 
- * 
- * 
- * 
  */
 
 /* Change Log:

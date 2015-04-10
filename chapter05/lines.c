@@ -1,26 +1,9 @@
 /* lines.c --- 
  * 
  * Filename: lines.c
- * Description: 
+ * Description: Reading and writing lines from stdin/stdout.
  * Author: Martin Homuth
- * Maintainer: 
  * Created: Thu Apr  9 12:12:38 2015 (+0200)
- * Version: 
- * Package-Requires: ()
- * Last-Updated: 
- *           By: 
- *     Update #: 0
- * URL: 
- * Doc URL: 
- * Keywords: 
- * Compatibility: 
- * 
- */
-
-/* Commentary: 
- * 
- * 
- * 
  */
 
 /* Change Log:

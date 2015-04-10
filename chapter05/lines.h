@@ -1,26 +1,9 @@
 /* lines.h --- 
  * 
  * Filename: lines.h
- * Description: 
+ * Description: Reading and writing lines from stdin/stdout
  * Author: Martin Homuth
- * Maintainer: 
  * Created: Thu Apr  9 12:11:23 2015 (+0200)
- * Version: 
- * Package-Requires: ()
- * Last-Updated: 
- *           By: 
- *     Update #: 0
- * URL: 
- * Doc URL: 
- * Keywords: 
- * Compatibility: 
- * 
- */
-
-/* Commentary: 
- * 
- * 
- * 
  */
 
 /* Change Log:

@@ -1,26 +1,9 @@
 /* alloc.c --- 
  * 
  * Filename: alloc.c
- * Description: 
+ * Description: Allocation of character buffers
  * Author: Martin Homuth
- * Maintainer: 
  * Created: Thu Apr  9 12:47:33 2015 (+0200)
- * Version: 
- * Package-Requires: ()
- * Last-Updated: 
- *           By: 
- *     Update #: 0
- * URL: 
- * Doc URL: 
- * Keywords: 
- * Compatibility: 
- * 
- */
-
-/* Commentary: 
- * 
- * 
- * 
  */
 
 /* Change Log:

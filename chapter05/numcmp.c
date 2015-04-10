@@ -1,26 +1,10 @@
 /* numcmp.c --- 
  * 
  * Filename: numcmp.c
- * Description: 
+ * Description: Comparing character strings according to their
+ *              numerical representation. 
  * Author: Martin Homuth
- * Maintainer: 
  * Created: Thu Apr  9 12:16:12 2015 (+0200)
- * Version: 
- * Package-Requires: ()
- * Last-Updated: 
- *           By: 
- *     Update #: 0
- * URL: 
- * Doc URL: 
- * Keywords: 
- * Compatibility: 
- * 
- */
-
-/* Commentary: 
- * 
- * 
- * 
  */
 
 /* Change Log:

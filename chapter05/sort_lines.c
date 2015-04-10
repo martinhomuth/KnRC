@@ -1,26 +1,9 @@
 /* main.c --- 
  * 
  * Filename: main.c
- * Description: 
+ * Description: Sorting lines with different functions using pointers to functions
  * Author: Martin Homuth
- * Maintainer: 
  * Created: Thu Apr  9 12:17:01 2015 (+0200)
- * Version: 
- * Package-Requires: ()
- * Last-Updated: 
- *           By: 
- *     Update #: 0
- * URL: 
- * Doc URL: 
- * Keywords: 
- * Compatibility: 
- * 
- */
-
-/* Commentary: 
- * 
- * 
- * 
  */
 
 /* Change Log:
@@ -71,8 +54,6 @@ int main(int argc, char *argv[])
 		printf("input too big to sort\n");
 		return 1;
 	}
-	
 }
-
 
 /* main.c ends here */
