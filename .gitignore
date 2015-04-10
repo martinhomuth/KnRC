@@ -7,3 +7,5 @@
 !*.h
 !chapter05
 /chapter05/sort_lines
+/chapter05/dcl
+/chapter05/undcl

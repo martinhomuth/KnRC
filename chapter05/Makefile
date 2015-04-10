@@ -4,14 +4,18 @@ CC=gcc
 
 CFLAGS = -Wall -Wextra -g -O3 --std=c11 -pedantic 
 
-SOURCEFILES := $(wildcard *.c) 
-HEADERFILES := $(wildcard *.h)
 
 .PHONY: depend clean help 
 
-all: sort_lines
+all: sort_lines dcl undcl
 
-sort_lines: $(SOURCEFILES)
+sort_lines: alloc.c alloc.h lines.c lines.h numcmp.c numcmp.h qsort.c qsort.h sort_lines.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LFLAGS) $(LIBS)
+
+dcl: dcl.c dcl.h
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LFLAGS) $(LIBS)
+
+undcl: undcl.c undcl.h dcl.h
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LFLAGS) $(LIBS)
 
 $(EXECUTABLE): $(OBJS)
