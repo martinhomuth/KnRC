@@ -27,10 +27,19 @@
 
 /* Code: */
 
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAXLINE 100
+
 void q_sort(void *v[], int left, int right,
-	    int (*comp)(void *, void *), int order)
+	    int (*comp)(void *, void *),
+	    int order, int fold)
 {
 	int i, last;
+	unsigned int j;
+	char l[MAXLINE], r[MAXLINE];
 	void swap(void *v[], int, int);
 
 	if(left >= right)
@@ -39,15 +48,30 @@ void q_sort(void *v[], int left, int right,
 	last = left;
 	for(i = left+1; i <= right; i++)
 	{
-		if(!order && (*comp)(v[i], v[left]) < 0)
+		strcpy(l,v[i]);
+		strcpy(r,v[left]);
+
+		if(fold)
+		{
+			for(j = 0; j < strlen(l); j++)
+			{
+				l[j] = tolower(l[j]);
+			}
+			for(j = 0; j < strlen(r); j++)
+			{
+				r[j] = tolower(r[j]);
+			}
+		}
+		
+		if(!order && (*comp)(l, r) < 0)
 			swap(v, ++last, i);
-		if(order && (*comp)(v[i], v[left]) >= 0)
+		if(order && (*comp)(l, r) >= 0)
 			swap(v, ++last, i);
 	}
 	
 	swap(v, left, last);
-	q_sort(v, left, last-1, comp, order);
-	q_sort(v, last+1, right, comp, order);
+	q_sort(v, left, last-1, comp, order, fold);
+	q_sort(v, last+1, right, comp, order, fold);
 }
 
 void swap(void *v[], int i, int j)

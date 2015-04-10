@@ -6,3 +6,4 @@
 !*.c
 !*.h
 !chapter05
+/chapter05/sort_lines

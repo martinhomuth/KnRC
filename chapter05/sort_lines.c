@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 	int nlines;               /* number of input lines read */
 	int numeric = 0;          /* 1 if numeric sort */
 	int order = 0;            /* 1 if sort order is decreasing */
+	int fold = 0;             /* 1 for case insensitivity */
 	int c;
 
 	while(--argc > 0)
@@ -62,6 +63,9 @@ int main(int argc, char *argv[])
 				case 'r':
 					order = 1;
 					break;
+				case 'f':
+					fold = 1;
+					break;
 				default:
 					printf("unknown option\n");
 					break;
@@ -73,7 +77,7 @@ int main(int argc, char *argv[])
 	if((nlines = read_lines(lineptr, MAXLINES)) >= 0)
 	{
 		q_sort((void **) lineptr, 0, nlines-1,
-		       (int (*)(void*,void*))(numeric ? numcmp : strcmp), order);
+		       (int (*)(void*,void*))(numeric ? numcmp : strcmp), order, fold);
 
 		write_lines(lineptr, nlines);
 		return 0;
