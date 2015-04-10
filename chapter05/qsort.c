@@ -30,12 +30,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include "qsort.h"
 
 #define MAXLINE 100
 
 void q_sort(void *v[], int left, int right,
 	    int (*comp)(void *, void *),
-	    int order, int fold)
+	    int order, int fold, int dict)
 {
 	int i, last;
 	unsigned int j;
@@ -48,9 +49,16 @@ void q_sort(void *v[], int left, int right,
 	last = left;
 	for(i = left+1; i <= right; i++)
 	{
-		strcpy(l,v[i]);
-		strcpy(r,v[left]);
-
+		if(dict)
+		{
+			an_strcpy(l, v[i]);
+			an_strcpy(r, v[left]);
+		}
+		else
+		{
+			strcpy(l,v[i]);
+			strcpy(r,v[left]);
+		}
 		if(fold)
 		{
 			for(j = 0; j < strlen(l); j++)
@@ -62,7 +70,6 @@ void q_sort(void *v[], int left, int right,
 				r[j] = tolower(r[j]);
 			}
 		}
-		
 		if(!order && (*comp)(l, r) < 0)
 			swap(v, ++last, i);
 		if(order && (*comp)(l, r) >= 0)
@@ -70,8 +77,8 @@ void q_sort(void *v[], int left, int right,
 	}
 	
 	swap(v, left, last);
-	q_sort(v, left, last-1, comp, order, fold);
-	q_sort(v, last+1, right, comp, order, fold);
+	q_sort(v, left, last-1, comp, order, fold, dict);
+	q_sort(v, last+1, right, comp, order, fold, dict);
 }
 
 void swap(void *v[], int i, int j)
@@ -81,6 +88,20 @@ void swap(void *v[], int i, int j)
 	tmp = v[i];
 	v[i] = v[j];
 	v[j] = tmp;
+}
+
+void an_strcpy(char *s1, char *s2)
+{
+	while(*s2 != '\0')
+	{
+		if(isalnum(*s2) || isspace(*s2))
+			*s1++ = *s2++;
+		else
+		{
+			s2++;
+		}
+	}
+	*s1 = '\0';
 }
 
 
