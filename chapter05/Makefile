@@ -1,7 +1,4 @@
 
-#define the Objectdirectories
-OBJDIR := build
-
 #define the C compiler
 CC=gcc
 

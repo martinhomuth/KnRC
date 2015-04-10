@@ -28,6 +28,6 @@
 /* Code: */
 
 void q_sort(void *lineptr[], int left, int right,
-	   int (*comp)(void*,void*));
+	    int (*comp)(void*,void*),int order);
 
 /* qsort.h ends here */

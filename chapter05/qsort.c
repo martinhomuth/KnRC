@@ -28,7 +28,7 @@
 /* Code: */
 
 void q_sort(void *v[], int left, int right,
-	   int (*comp)(void *, void *))
+	    int (*comp)(void *, void *), int order)
 {
 	int i, last;
 	void swap(void *v[], int, int);
@@ -38,11 +38,16 @@ void q_sort(void *v[], int left, int right,
 	swap(v, left, (left + right)/2);
 	last = left;
 	for(i = left+1; i <= right; i++)
-		if((*comp)(v[i], v[left]) < 0)
+	{
+		if(!order && (*comp)(v[i], v[left]) < 0)
 			swap(v, ++last, i);
+		if(order && (*comp)(v[i], v[left]) >= 0)
+			swap(v, ++last, i);
+	}
+	
 	swap(v, left, last);
-	q_sort(v, left, last-1, comp);
-	q_sort(v, last+1, right, comp);
+	q_sort(v, left, last-1, comp, order);
+	q_sort(v, last+1, right, comp, order);
 }
 
 void swap(void *v[], int i, int j)

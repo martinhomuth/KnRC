@@ -8,6 +8,12 @@
 
 /* Change Log:
  * 
+ * Fri Apr 10 09:01:00 2015 (+0200)
+ *  Modify the sort program to handle a -r flag, which indicates
+ *  sorting in reverse (decreasing) order. Be sure that -r works
+ *  with -n.
+ *
+ *  
  * 
  */
 
@@ -37,14 +43,37 @@ int main(int argc, char *argv[])
 {
 	int nlines;               /* number of input lines read */
 	int numeric = 0;          /* 1 if numeric sort */
+	int order = 0;            /* 1 if sort order is decreasing */
+	int c;
 
-	if(argc > 1 && strcmp(argv[1], "-n") == 0)
-		numeric = 1;
+	while(--argc > 0)
+	{
+		argv++;
+		if(*argv[0] == '-')
+		{
+			char *ptr = &argv[0][1];
+			while((c = *(ptr++)) != '\0')
+			{
+				switch(c)
+				{
+				case 'n':
+					numeric = 1;
+					break;
+				case 'r':
+					order = 1;
+					break;
+				default:
+					printf("unknown option\n");
+					break;
+				}
+			}
+		}
+	}
 
 	if((nlines = read_lines(lineptr, MAXLINES)) >= 0)
 	{
 		q_sort((void **) lineptr, 0, nlines-1,
-		       (int (*)(void*,void*))(numeric ? numcmp : strcmp));
+		       (int (*)(void*,void*))(numeric ? numcmp : strcmp), order);
 
 		write_lines(lineptr, nlines);
 		return 0;
