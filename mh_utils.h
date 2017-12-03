@@ -23,12 +23,12 @@ enum log_location {
 
 #define KORANGE "\x1B[38;5;52m"
 
-#define log_info(...) (fprintf(stdout, KBLU "INFO: " KNRM __VA_ARGS__))
-#define log_warn(...) (fprintf(stdout, KORANGE "WARNING: " KNRM __VA_ARGS__))
+#define log_info(...) (fprintf(stdout, KBLU "INFO:\t" KNRM __VA_ARGS__))
+#define log_warn(...) (fprintf(stdout, KORANGE "WARN:\t" KNRM __VA_ARGS__))
 #define log_err(...)							\
 	do {								\
-		fprintf(stderr, KRED "ERROR: " KNRM  __VA_ARGS__);	\
-		fprintf(stderr, "%s\n", strerror(errno));		\
+		fprintf(stderr, KRED "ERROR:\t" KNRM  __VA_ARGS__);	\
+		fprintf(stderr, "\terrno: %s\n", strerror(errno));	\
 		exit(EXIT_FAILURE);					\
 	}								\
 	while (0)
