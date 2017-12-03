@@ -1,4 +1,4 @@
-#include "my_utils.h"
+#include "mh_utils.h"
 
 void swap(char *p1, char *p2)
 {
@@ -16,4 +16,9 @@ void reverse(char *ptr)
 	tmp = ptr+numel-1;
 	while(tmp > ptr)
 		swap(tmp--, ptr++);
+}
+
+void log_info(const char *format, ...)
+{
+
 }

@@ -1,5 +1,5 @@
-/* tail.c --- 
- * 
+/* tail.c ---
+ *
  * Filename: tail.c
  * Description: Write the program tail, which prints the last n lines of its
  *              input. By default, n is 10, let us say, but it can be changed
@@ -11,9 +11,8 @@
  *              array of fixed size.
  * Author: Martin Homuth
  * Created: Sun Mar 22 15:49:00 2015 (+0100)
- */
-
-/* Commentary: 
+ *
+ * Commentary:
  * Section 5.6 sorting program:
  * readlines(char *lineptr[], int maxlines)
  * {
@@ -35,19 +34,17 @@
  *   }
  *   return nlines;
  * }
- * 
- */
-
-/* This program is free software: you can redistribute it and/or modify
+ *
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -58,9 +55,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mh_utils.h"
+
 #define MAXLINE 100
 #define DEFAULT 10
 #define MAXLEN 100
+
+
 
 char *alloc(int len)
 {
