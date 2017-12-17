@@ -23,7 +23,13 @@ enum log_location {
 
 #define KORANGE "\x1B[38;5;52m"
 
+/* TODO: error messages in these functions look horrible */
 #define log(...) (fprintf(stdout, __VA_ARGS__))
+#ifdef DEBUG
+#define log_debug(...) (fprintf(stdout, KYEL "DEBUG:\t" KNRM __VA_ARGS__))
+#else
+#define log_debug(...)
+#endif
 #define log_info(...) (fprintf(stdout, KBLU "INFO:\t" KNRM __VA_ARGS__))
 #define log_warn(...) (fprintf(stdout, KORANGE "WARN:\t" KNRM __VA_ARGS__))
 #define log_err(...)							\
